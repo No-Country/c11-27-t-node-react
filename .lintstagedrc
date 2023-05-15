@@ -1,0 +1,4 @@
+{
+	"client/**/*.{html,js,jsx,json}": ["prettier --write"],
+	"server/**/*.{js,json}": ["prettier --write"]
+}

@@ -1,0 +1,21 @@
+{
+  "semi": false,
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "client/**/*",
+      "options": {
+        "semi": true,
+        "singleQuote": false,
+        "plugins": ["prettier-plugin-tailwindcss"]
+      }
+    }
+  ]
+}
