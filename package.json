@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev"
+    "install client": "npm install && npm run prepare && cd client && npm install",
+    "install server": "npm install && npm run prepare && cd server && npm install",
+    "dev client": "cd client && npm run dev",
+    "dev server": "cd server && npm run dev"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
