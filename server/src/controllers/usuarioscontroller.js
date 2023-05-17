@@ -7,25 +7,18 @@ const generateAccessToken = (user) => {
   };
 
 const register = async (req,res) => {
-    const {name,email,isvalid,state,password} = req.body
-
-    const user = { email };
-    const accesstoken = generateAccessToken(user);
+    const {name,email,password} = req.body
 
     const usuario = new usuarios({
         name,
         email,
-        isvalid,
-        state,
-        password
+        password,
     })
 
     await usuario.save();
-    res.header('authorization', accesstoken);
     res.json({
         status: 'success',
         message:'user successfully created',
-        token: accesstoken,
         data: {
             name,
             email

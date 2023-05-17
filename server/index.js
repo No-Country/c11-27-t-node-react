@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const routeruser = require('./src/routers/usuariorouter')
+const routeruser = require('./src/routers/routers')
 const dotenv = require('dotenv')
 
 dotenv.config({
