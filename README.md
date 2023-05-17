@@ -27,12 +27,12 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 1. Instala las dependencias del cliente con
 
    ```sh
-   npm run install client
+   npm run 'install client'
    ```
 
    2. Inicia el cliente
    ```sh
-   npm run dev client
+   npm run 'dev client'
    ```
 
 #### Server (Back-end)
@@ -40,10 +40,10 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 1. Instala las dependencias del server
 
    ```sh
-   npm run install server
+   npm run 'install server'
    ```
 
 2. Inicia el server
    ```sh
-   npm run dev server
+   npm run 'dev server'
    ```
