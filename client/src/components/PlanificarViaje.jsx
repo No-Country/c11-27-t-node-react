@@ -3,6 +3,9 @@ import Logo from "./icons/Logo";
 import itinerary from "../assets/itinerary.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+registerLocale("es", es);
 
 const PlanificarViaje = () => {
   const [dateRange, setDateRange] = useState([null, null]);
@@ -40,6 +43,7 @@ const PlanificarViaje = () => {
           <form className="mt-3 flex w-72 gap-5 rounded border-2 border-[#E5E5E5] text-center font-sans text-xs font-medium">
             <i className="fa-solid fa-calendar-days relative top-[10px] ml-1 h-4 w-5 text-[#D4D4D4] hover:text-[#4ADE80]"></i>
             <DatePicker
+              locale="es"
               className="my-2 flex outline-none"
               placeholderText="Desde - Hasta"
               selectsRange={true}
