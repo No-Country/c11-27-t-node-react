@@ -54,9 +54,9 @@ const Input = ({ placeholder, leftIcon, rightIcon, type = "text" }) => {
 
   return (
     <div
-      className={`flex w-full items-center gap-2.5 rounded border-2 border-neutral-200 bg-white p-2 ${
-        isFocused ? "border-green-400" : ""
-      }`}
+      className={`flex w-full items-center gap-2.5 rounded p-2 ${
+        isFocused ? "border-2 border-green-400" : "border-2 border-neutral-200"
+      } bg-white`}
     >
       {leftIcon && (
         <FontAwesomeIcon
