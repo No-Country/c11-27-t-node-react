@@ -11,7 +11,7 @@ const icons = {
   calendarDays: faCalendarDays,
 };
 
-const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
+const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => {
   const [isFocused, setFocused] = useState(false);
 
   return (
@@ -33,6 +33,7 @@ const CustomInput = React.forwardRef(({ value, onClick }, ref) => {
         type="text"
         className="w-full flex-grow text-neutral-800 outline-none placeholder:font-semibold placeholder:text-neutral-300"
         value={value}
+        placeholder={placeholder}
         ref={ref}
         readOnly
       />
@@ -48,6 +49,13 @@ const DateRangeInput = ({ placeholder }) => {
     return date ? format(date, "d 'de' MMMM 'de' yyyy", { locale: es }) : "";
   };
 
+  let inputVal = "";
+  if (startDate && endDate) {
+    inputVal = `${dateToString(startDate)} - ${dateToString(endDate)}`;
+  } else if (!startDate && !endDate) {
+    inputVal = "";
+  }
+
   return (
     <DatePicker
       selected={startDate}
@@ -60,13 +68,8 @@ const DateRangeInput = ({ placeholder }) => {
       endDate={endDate}
       selectsRange
       placeholderText={placeholder}
-      customInput={<CustomInput />}
-      dateFormat="MM/dd/yyyy"
-      value={
-        startDate && endDate
-          ? `${dateToString(startDate)} - ${dateToString(endDate)}`
-          : ""
-      }
+      customInput={<CustomInput value={inputVal} placeholder={placeholder} />}
+      dateFormat="d 'de' MMMM 'de' yyyy"
     />
   );
 };
