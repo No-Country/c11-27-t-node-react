@@ -1,0 +1,32 @@
+.react-datepicker__header {
+  background-color: #ffffff !important; /* color de fondo del encabezado */
+  color: #404040 !important; /* color del texto del encabezado */
+  font-weight: 600; /* semi-bold font */
+}
+
+.react-datepicker__current-month {
+  color: #404040 !important; /* color del mes actual */
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #404040 !important; /* color del nombre del día, día y nombre del tiempo */
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  background-color: #10b981 !important; /* color de fondo del día seleccionado y en el rango de selección */
+  color: white !important; /* color del texto del día seleccionado y en el rango de selección */
+}
+
+.react-datepicker__day--today {
+  background-color: #10b981 !important; /* color de fondo del día actual */
+  color: white !important; /* color del texto del día actual */
+}
+
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+  fill: #404040 !important; /* color de los botones de navegación */
+}
