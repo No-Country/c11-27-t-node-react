@@ -52,9 +52,10 @@ const Button = ({
   color = "default",
   disabled = false,
   fullWidth = false,
+  iconOnly = false,
 }) => {
   const baseStyle =
-    "flex items-center justify-center gap-2 rounded px-4 py-2 text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-none";
+    "flex items-center justify-center gap-2 rounded text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-none";
 
   let buttonColor;
   let textStyle;
@@ -86,21 +87,22 @@ const Button = ({
   }
 
   const disabledStyle = "cursor-not-allowed";
+  const iconOnlyStyle = "p-1";
 
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyle} ${
+      className={`${baseStyle} ${iconOnly ? iconOnlyStyle : "px-4 py-2"} ${
         variant === "text" ? textStyle : buttonColor
       } ${disabled ? disabledStyle : ""} ${fullWidth ? "w-full" : ""}`}
     >
-      {iconName && iconPosition === "left" && (
+      {iconName && (iconPosition === "left" || iconOnly) && (
         <FontAwesomeIcon icon={icons[iconName]} className="text-lg" />
       )}
-      {label}
-      {iconName && iconPosition === "right" && (
+      {!iconOnly && label}
+      {iconName && iconPosition === "right" && !iconOnly && (
         <FontAwesomeIcon icon={icons[iconName]} className="text-lg" />
       )}
     </button>
