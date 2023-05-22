@@ -5,8 +5,9 @@ const Schema = mongoose.Schema
 const itinerarioSchema = new Schema({
     id_user: {type: String},
     destino: {type: String},
-    tiempo: {type: Number},
-    fecha: {type: Date}
+    fechainicio: {type: Date},
+    fechafinal: {type: Date},
+    intereses: {type: String}
 })
 
 const itinerario = mongoose.model('itinerario', itinerarioSchema)
