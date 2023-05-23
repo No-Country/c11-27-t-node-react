@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const historialSchema = new Schema({
     id_user: {type: String},
-    id_busqueda: {type: String}
+    id_itinerario: {type: String}
 })
 
 const historial = mongoose.model('historial', historialSchema)

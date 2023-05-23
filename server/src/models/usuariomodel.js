@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 
 const usuarioSchema = new Schema({
     name: {type:String},    
-    email: {type:String},
+    email: {type:String, unique:true},
     isvalid: {type:Boolean},
     state: {type: Boolean},
     password: {type: String},
