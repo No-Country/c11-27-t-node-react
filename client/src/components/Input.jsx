@@ -42,7 +42,14 @@ const icons = {
   arrowRight: faArrowRight,
 };
 
-const Input = ({ placeholder, leftIcon, rightIcon, type = "text" }) => {
+const Input = ({
+  placeholder,
+  leftIcon,
+  rightIcon,
+  type = "text",
+  value,
+  setValue,
+}) => {
   const [isFocused, setFocused] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const inputType =
@@ -72,6 +79,10 @@ const Input = ({ placeholder, leftIcon, rightIcon, type = "text" }) => {
         placeholder={placeholder}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        value={value}
+        onChange={event => {
+          setValue(event.target.value);
+        }}
       />
       {rightIcon && (
         <FontAwesomeIcon
