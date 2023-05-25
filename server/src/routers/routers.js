@@ -16,5 +16,5 @@ routeruser.put('/renew', actualizardatos)
 
 routeruser.use(verifyRole)
 routeruser.get('/', listusuarios)
-routeruser.get('/', listaitinerarios)
+routeruser.get('/route', listaitinerarios)
 module.exports = routeruser
