@@ -1,5 +1,6 @@
 const {Configuration,OpenAIApi} = require('openai')
-const {itinerarios} = require('../models/itinrario')
+const {itinerarios} = require('../models/itinrariomodel')
+const {itinerarioSchema} = require('../models/validacion')
 const dotenv = require('dotenv')
 
 dotenv.config({
@@ -14,6 +15,11 @@ const openAi = new OpenAIApi(configuration);
 
 const generateBusqueda = async (req,res) => {
     const {_id, destino, fechainicio, fechafinal, intereses} = req.body
+    const { error } = itinerarioSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
     const result = await openAi.createCompletion({
         model: "text-davinci-003",
         prompt:`Estoy planeando un viaje a ${destino} desde el ${fechainicio} hasta el ${fechafinal}. Estoy especialmente interesado en ${intereses}. Me gustaría que me generes un itinerario en formato JSON que incluya:
@@ -44,17 +50,37 @@ const generateBusqueda = async (req,res) => {
     const busqueda = result.data.choices[0].text;
     const itinerario = new itinerarios({
         id_user: _id,
+        destino,
+        fechainicio,
+        fechafinal,
+        intereses,
         search: busqueda
     })
 
-    await itinerario.save();
+    const databusqueda = await itinerario.save();
 
     res.status(200).json({
         success: true,
-        data: busqueda
+        data: databusqueda
     })
 }
 
+const historial = async (req, res) => {
+    try {
+        const{_id} = req.body
+        
+      const historial = await itinerarios.find({id_user:_id});
+      console.log(historial)
+      res.status(200).json({
+        status: 'success',
+        data: historial,
+      });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  };
+
 module.exports = {
-    generateBusqueda
+    generateBusqueda,
+    historial
 }
