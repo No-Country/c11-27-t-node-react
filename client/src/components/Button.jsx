@@ -21,6 +21,7 @@ import {
   faAngleUp,
   faArrowRight,
   faArrowLeft,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
 const icons = {
@@ -42,6 +43,7 @@ const icons = {
   angleUp: faAngleUp,
   arrowRight: faArrowRight,
   arrowLeft: faArrowLeft,
+  bars: faBars,
 };
 
 const Button = ({
