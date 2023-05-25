@@ -1,7 +1,16 @@
 const express = require('express')
 const cors = require('cors')
+const mongoose = require('mongoose')
+const routeruser = require('./src/routers/routers')
+const dotenv = require('dotenv')
+
+dotenv.config({
+  path:'../.env'
+})
+
 const app = express()
 const port = process.env.PORT || 3000
+const database = process.env.MONGODB_URI || ''
 
 app.use(
   cors({
@@ -12,9 +21,16 @@ app.use(
   }),
 )
 
-app.get('/api/hello', (req, res) => {
-  res.send('Hello, World!')
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use('/api/v1', routeruser)
+
+
+const mongodb = () => {
+  mongoose.connect(database)
+  console.log('database open')
+}
+mongodb()
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
