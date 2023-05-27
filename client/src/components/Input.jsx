@@ -20,6 +20,7 @@ import {
   faAngleDown,
   faAngleUp,
   faArrowRight,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 const icons = {
@@ -40,6 +41,7 @@ const icons = {
   angleDown: faAngleDown,
   angleUp: faAngleUp,
   arrowRight: faArrowRight,
+  arrowLeft: faArrowLeft,
 };
 
 const Input = ({
