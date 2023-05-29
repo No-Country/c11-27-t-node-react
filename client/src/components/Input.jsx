@@ -83,6 +83,7 @@ const Input = ({
         onChange={event => {
           setValue(event.target.value);
         }}
+        required
       />
       {rightIcon && (
         <FontAwesomeIcon

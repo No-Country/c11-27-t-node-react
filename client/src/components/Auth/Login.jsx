@@ -1,12 +1,21 @@
-import React from "react";
-import mainImg from "../imgs/log-in-Image.svg";
-import logo from "../imgs/Logo.svg";
+import React, { useState } from "react";
+import mainImg from "../../assets/Log in Image.svg";
+import logo from "../../assets/Logo.svg";
 import { Link } from "react-router-dom";
-import Input from "../components/input";
+import Input from "../Input";
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const newUser = {
+    email,
+    password,
+  };
+
+  const onSubmit = newUser => {
+    setLogin(newUser);
+  };
 
   return (
     <>
@@ -30,7 +39,7 @@ export const LoginScreen = () => {
             <p className="mb-[32px] text-xs font-semibold">
               ¡Planifiquemos tu proximo viaje!
             </p>
-            <form className="mb-[32px] flex flex-col gap-1">
+            <form className="mb-[32px] flex flex-col gap-1" onSubmit={onSubmit}>
               <Input
                 type="email"
                 placeholder="Correo electrónico"
