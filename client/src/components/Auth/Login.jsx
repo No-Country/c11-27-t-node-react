@@ -14,7 +14,8 @@ export const LoginScreen = ({ setLogin }) => {
   };
 
   const onSubmit = newUser => {
-    setLogin(newUser);
+    // setLogin(newUser);
+    console.log(newUser);
   };
 
   return (
