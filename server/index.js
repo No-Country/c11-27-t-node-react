@@ -5,10 +5,11 @@ const routeruser = require('./src/routers/routers')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path: '../.env',
+  path: './.env',
 })
 
 const app = express()
+const port = process.env.PORT
 const database = process.env.MONGODB_URI
 
 const corsOrigins = process.env.CORS_ORIGINS
@@ -29,3 +30,7 @@ const mongodb = () => {
   mongoose.connect(database)
 }
 mongodb()
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`)
+})
