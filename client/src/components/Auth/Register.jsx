@@ -20,7 +20,7 @@ const Register = () => {
           <div>
             <div className="flex flex-col items-start gap-2">
               <h1 className="mb-[10px] mt-[20px] font-sans text-xl font-bold leading-[24.2px]">
-                Crea tu cuenta ahora{" "}
+                Crea tu cuenta ahora
               </h1>
               <p className="mb-[35px] font-sans text-xs font-semibold leading-[14.52px]">
                 ¡Registrate para crear tu itinerario de viaje!
