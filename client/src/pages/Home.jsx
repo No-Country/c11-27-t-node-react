@@ -12,7 +12,7 @@ const Home = () => {
         console.error("Error al hacer la solicitud:", error);
       });
   }, []);
-  return <div className="text-blue-500">Home</div>;
+  return <div className="text-2xl font-bold">Home</div>;
 };
 
 export default Home;
