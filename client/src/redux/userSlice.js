@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const dotenv = require("dotenv");
+
+dotenv.config({
+  path: "../../.env",
+});
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1",
+        `${import.meta.env.VITE_API_URL}/api/v1`,
         userData,
       );
       return response.data;
@@ -21,7 +26,7 @@ export const updateUserPassword = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/v1/reset",
+        `${import.meta.env.VITE_API_URL}/api/v1/reset`,
         userData,
       );
       return response.data;
@@ -36,7 +41,7 @@ export const updateUserData = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/v1/renew",
+        `${import.meta.env.VITE_API_URL}/api/v1/renew`,
         userData,
       );
       return response.data;
@@ -50,9 +55,12 @@ export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.delete("http://localhost:5000/api/v1", {
-        data: userData,
-      });
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/v1/`,
+        {
+          data: userData,
+        },
+      );
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

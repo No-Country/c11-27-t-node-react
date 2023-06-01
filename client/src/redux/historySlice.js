@@ -1,13 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const dotenv = require("dotenv");
+
+dotenv.config({
+  path: "../../.env",
+});
 
 export const fetchHistory = createAsyncThunk(
   "history/fetch",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/v1/record", {
-        _id: userId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/v1/record`,
+        {
+          _id: userId,
+        },
+      );
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

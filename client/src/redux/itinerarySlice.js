@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const dotenv = require("dotenv");
+
+dotenv.config({
+  path: "../../.env",
+});
 
 export const generateItinerary = createAsyncThunk(
   "itinerary/generate",
   async (itineraryData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/search",
+        `${import.meta.env.VITE_API_URL}/api/v1/search`,
         itineraryData,
       );
       return response.data;
