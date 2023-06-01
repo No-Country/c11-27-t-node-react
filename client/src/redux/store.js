@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
-import userReducer from "./userSlice";
-import itineraryReducer from "./itinerarySlice";
-import historyReducer from "./historySlice";
+import authReducer from "./slices/authSlice";
+import userReducer from "./slices/userSlice";
+import itineraryReducer from "./slices/itinerarySlice";
+import historyReducer from "./slices/historySlice";
+import loadingReducer from "./slices/loadingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     user: userReducer,
     itinerary: itineraryReducer,
     history: historyReducer,
+    loading: loadingReducer,
   },
 });
