@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { LoginScreen } from "../components/Auth/Login";
-import * as todosAPI from "../utils/fetchFunctions";
 
 const Home = () => {
   useEffect(() => {
@@ -14,12 +12,7 @@ const Home = () => {
         console.error("Error al hacer la solicitud:", error);
       });
   }, []);
-
-  const handleLogin = userToSubmit => {
-    todosAPI.postLogin(userToSubmit).then();
-  };
-  // return <div className="text-blue-500">Home</div>;
-  return <LoginScreen setLogin={handleLogin} />;
+  return <div className="text-blue-500">Home</div>;
 };
 
 export default Home;
