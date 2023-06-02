@@ -1,41 +1,40 @@
 import React from "react";
-import Button from "../Button";
-import Input from "../Input";
 import Header from "../Header";
 import Footer from "../Footer";
+import Input from "../Input";
+import Button from "../Button";
+import ForgotPassword from "../../assets/forgot-password.svg";
 
-const RecoverPassword = () => {
+const Register = () => {
   return (
-    <div>
-      <Header />
-      <div className="flex h-[82.7vh] items-center justify-center  gap-2 bg-[#FAFAFA] text-[#1E1E1E]">
-        <div className="items-center justify-center rounded sm:flex sm:flex-row sm:gap-[32px] sm:p-[32px] lg:bg-[#ffff]">
-          <div className="flex justify-center gap-2 sm:mt-[50px]">
-            <img
-              className="pl mb-[25px] h-[194px] w-[200px] sm:h-[287px] sm:w-[400px]"
-              src="./src/assets/forgot-password.svg"
-              alt="forgotPassword"
-            />
-          </div>
-          <div>
-            <div className="flex flex-col items-start gap-2">
-              <h1 className="mb-[10px] mt-[20px] font-sans text-xl font-bold leading-[24.2px]">
-                ¿Olvidastes tu contraseña?
-              </h1>
-              <p className="mb-[35px] font-sans text-xs font-semibold leading-[14.52px]">
-                ¡No te preocupes!, te enviaremos las instrucciones para
+    <div className="flex h-screen flex-col justify-between bg-neutral-50 text-neutral-900">
+      <Header pageType="auth" />
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
+          <img src={ForgotPassword} alt="Sign Up" className="h-24 lg:h-96" />
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div className="text-xl font-bold">¿Olvidaste tu contraseña?</div>
+              <div className="text-sm font-semibold text-neutral-800">
+                No te preocupes, te enviaremos las instrucciones para
                 restablecerla.
-              </p>
+              </div>
             </div>
-
-            <div className="mb-[8px]">
-              <Input placeholder="Correo Electrónico" leftIcon="envelope" />
+            <div className="flex flex-col gap-2">
+              <Input
+                placeholder="Correo electrónico"
+                type="email"
+                leftIcon="envelope"
+              />
             </div>
-
             <Button label="Restablecer contraseña" fullWidth />
-            <div className="mb-[35px] mt-[20px] flex flex-row items-center justify-center gap-2 space-x-4 font-sans text-xs font-semibold leading-[14.52px]">
-              <Button iconOnly onClick="arrowLeft" />
-              <h3>Volver al inicio de sesión</h3>
+            <div className="flex items-center justify-center text-sm font-semibold">
+              <Button
+                label="Volver al inicio de sesión"
+                variant="text"
+                iconPosition="left"
+                iconName="arrowLeft"
+              />
             </div>
           </div>
         </div>
@@ -45,4 +44,4 @@ const RecoverPassword = () => {
   );
 };
 
-export default RecoverPassword;
+export default Register;
