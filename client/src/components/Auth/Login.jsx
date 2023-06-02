@@ -1,84 +1,51 @@
-import React, { useState } from "react";
-import mainImg from "../../assets/Log in Image.svg";
-import logo from "../../assets/Logo.svg";
-import { Link } from "react-router-dom";
+import React from "react";
+import Header from "../Header";
+import Footer from "../Footer";
 import Input from "../Input";
+import Button from "../Button";
+import LogIn from "../../assets/log-in.svg";
 
-export const LoginScreen = ({ setLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const newUser = {
-    email,
-    password,
-  };
-
-  const onSubmit = newUser => {
-    // setLogin(newUser);
-    console.log(newUser);
-  };
-
+const Register = () => {
   return (
-    <>
-      <div className="screen-container bg-[#FAFAFA] px-[16px] font-sans md:h-[95vh] md:scroll-m-0 ">
-        <header className="mb-[15px] flex gap-x-2 py-[9.5px] text-2xl font-bold">
-          <img src={logo} alt="app-logo" />
-          <h1>Tourist Route</h1>
-        </header>
-        <div className="md:mt-[145.5px] md:flex md:content-center md:justify-center">
-          <div className="mb-[32px] flex justify-center">
-            <img
-              src={mainImg}
-              alt="main Image"
-              className="md:h-[240px] md:w-[400px]"
-            />
-          </div>
-          <section>
-            <h2 className="p-{10px} mb-[8px] text-xl font-bold">
-              Bienvenido de vuelta
-            </h2>
-            <p className="mb-[32px] text-xs font-semibold">
-              ¡Planifiquemos tu proximo viaje!
-            </p>
-            <form className="mb-[32px] flex flex-col gap-1" onSubmit={onSubmit}>
+    <div className="flex h-screen flex-col justify-between bg-neutral-50 text-neutral-900">
+      <Header pageType="auth" />
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
+          <img src={LogIn} alt="Sign Up" className="h-24 lg:h-96" />
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div className="text-xl font-bold">Bienvenido de vuelta</div>
+              <div className="text-sm font-semibold text-neutral-800">
+                ¡Planifiquemos tu proximo viaje!
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
               <Input
-                type="email"
                 placeholder="Correo electrónico"
+                type="email"
                 leftIcon="envelope"
-                value={email}
-                setValue={setEmail}
               />
               <Input
+                placeholder="Contraseña"
                 type="password"
-                placeholder="Contraseña"
                 leftIcon="key"
                 rightIcon="eye"
-                value={password}
-                setValue={setPassword}
               />
-              <div className="mb-[32px] flex justify-end">
-                <Link className="text-xs font-bold text-green-400 hover:text-[#16A34A] focus:text-[#22C55E]">
-                  ¿Olvidaste tu contraseña?
-                </Link>
+              <div className="flex items-center justify-end">
+                <Button label="¿Olvidaste tu contraseña?" variant="text" />
               </div>
-              <button className="rounded bg-[#4ADE80] py-2 text-base font-semibold text-white hover:bg-[#16A34A] focus:bg-[#22C55E]">
-                Iniciar sesión
-              </button>
-            </form>
-            <div className="mb-[18px] flex justify-center gap-1">
-              <p className="text-xs font-semibold">¿No tienes una cuenta?</p>
-              <Link className="text-xs font-semibold text-green-400 hover:text-[#16A34A] focus:text-[#22C55E]">
-                Registrate ahora
-              </Link>
             </div>
-          </section>
+            <Button label="Iniciar sesión" fullWidth />
+            <div className="flex items-center justify-center text-sm font-semibold">
+              <div>¿No tienes una cuenta?</div>
+              <Button label="Regístrate ahora" variant="text" />
+            </div>
+          </div>
         </div>
       </div>
-      <footer className="flex justify-center bg-[#E5E5E5] px-[42px] py-[8px] font-sans md:h-[5vh]">
-        <p className="text-xs font-normal">
-          © 2023 Tourist Route. All rights reserved.
-        </p>
-      </footer>
-    </>
+      <Footer />
+    </div>
   );
 };
+
+export default Register;
