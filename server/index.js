@@ -5,30 +5,29 @@ const routeruser = require('./src/routers/routers')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path:'../.env'
+  path: './.env',
 })
 
 const app = express()
-const port = process.env.PORT || 3000
-const database = process.env.MONGODB_URI || ''
+const port = process.env.PORT
+const database = process.env.MONGODB_URI
+
+const corsOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
+  : []
 
 app.use(
   cors({
-    origin: [
-      'https://tourist-route.vercel.app',
-      'https://tourist-route-git-develop-andryore.vercel.app',
-    ],
+    origin: corsOrigins,
   }),
 )
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use('/api/v1', routeruser)
-
 
 const mongodb = () => {
   mongoose.connect(database)
-  console.log('database open')
 }
 mongodb()
 
