@@ -1,61 +1,61 @@
 import React from "react";
+import Header from "../Header";
+import Footer from "../Footer";
 import Input from "../Input";
 import Button from "../Button";
-import UserDropdown from "../UserDropdown";
-import InputTags from "../InputTags";
 
-const AccountInformation = () => {
+const Register = () => {
   return (
-    <div className="flex min-h-[568px] min-w-[320px] items-center justify-center  gap-2 bg-[#FAFAFA] text-[#1E1E1E]">
-      <div className="mt-[5px] items-center justify-center rounded sm:flex sm:flex-row sm:gap-[32px] sm:p-[32px] lg:bg-[#ffff]">
-        <div>
-          <div className="flex justify-center gap-2 sm:mt-[50px]">
-            <h1 className="mb-[40px] mt-[50px] font-sans text-xl font-bold leading-[24.2px]">
-              Ajustes de la cuenta
-            </h1>
-          </div>
-          <div className="mb-[8px]">
-            <Input placeholder="Nombre" leftIcon="user" />
-          </div>
-          <div className="mb-[8px]">
-            <Input placeholder="Correo Electrónico" leftIcon="envelope" />
-          </div>
-          <div className="mb-[8px]">
-            <Input
-              placeholder="Contraseña antigua"
-              leftIcon="key"
-              rightIcon="eye"
-            />
-          </div>
-          <div className="mb-[8px]">
-            <Input
-              placeholder="Nueva contraseña"
-              leftIcon="key"
-              rightIcon="eye"
-            />
-          </div>
-          <div className="mb-[8px]">
-            <Input
-              placeholder="Confirmar nueva contraseña"
-              leftIcon="key"
-              rightIcon="eye"
-            />
-          </div>
-
-          <Button label="Guardar" fullWidth />
-
-          <div className="mb-[35px] mt-[40px] flex flex-row items-center justify-center gap-2 space-x-4 font-sans text-xs font-semibold leading-[14.52px]">
-            <div className="flex space-x-2">
-              <img className="h-4 w-5 " src="./trash-icon.svg" alt="trash" />
-              <button className="mt-[2px] flex items-start justify-start rounded text-[#EF4444]">
-                Eliminar cuenta
-              </button>
+    <div className="flex h-screen flex-col justify-between bg-neutral-50 text-neutral-900">
+      <Header pageType="loggedin" />
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div className="text-xl font-bold">Ajustes de la cuenta</div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Input placeholder="Nombre" leftIcon="user" />
+              <Input
+                placeholder="Correo electrónico"
+                type="email"
+                leftIcon="envelope"
+              />
+              <Input
+                placeholder="Contraseña antigua"
+                type="password"
+                leftIcon="key"
+                rightIcon="eye"
+              />
+              <Input
+                placeholder="Nueva contraseña"
+                type="password"
+                leftIcon="key"
+                rightIcon="eye"
+              />
+              <Input
+                placeholder="Confirmar nueva contraseña"
+                type="password"
+                leftIcon="key"
+                rightIcon="eye"
+              />
+            </div>
+            <Button label="Guardar" fullWidth />
+            <div className="flex items-center justify-center text-sm font-semibold">
+              <Button
+                label="Eliminar cuenta"
+                variant="text"
+                iconPosition="left"
+                iconName="trashCan"
+                color="red"
+              />
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
-export default AccountInformation;
+export default Register;

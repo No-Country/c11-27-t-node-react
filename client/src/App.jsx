@@ -6,10 +6,6 @@ import Home from "./pages/Home";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import RecoverPassword from "./components/Auth/RecoverPassword";
-import ResetPassword from "./components/Auth/ResetPassword";
-import AccountInformation from "./components/Auth/AccountInformation";
-import Register from "./components/Auth/Register";
 
 function App() {
   return (
@@ -23,10 +19,6 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/recoverpassword" element={<RecoverPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/accountinformation" element={<AccountInformation />} />
       </Routes>
     </BrowserRouter>
   );
