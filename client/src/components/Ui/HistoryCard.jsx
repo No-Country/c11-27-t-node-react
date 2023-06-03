@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../Ui/Button";
 import { Link } from "react-router-dom";
 
-const HistoryCard = ({ location, dateRange, itineraryLink }) => {
+const HistoryCard = ({ itinerary: { location, dateRange, itineraryLink } }) => {
   return (
     <div className="gap-1 rounded bg-neutral-200 p-2 shadow-lg">
       <div>
