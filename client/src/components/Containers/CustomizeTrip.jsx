@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import InputTags from "./InputTags";
-import Button from "./Button";
-import Itinerary2 from "../assets/itinerary2.svg";
+import Header from "../Ui/Header";
+import Footer from "../Ui/Footer";
+import InputTags from "../Ui/InputTags";
+import Button from "../Ui/Button";
+import Itinerary2 from "../../assets/itinerary2.svg";
 
 const CustomizeTrip = () => {
   return (
