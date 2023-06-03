@@ -3,7 +3,7 @@ import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import ForgotPassword from "../../../assets/forgot-password.svg";
 
-const Register = () => {
+const RecoverPassword = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
@@ -42,4 +42,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RecoverPassword;
