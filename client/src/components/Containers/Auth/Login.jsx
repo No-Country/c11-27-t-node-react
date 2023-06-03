@@ -1,6 +1,4 @@
 import React from "react";
-import Header from "../../Ui/Header";
-import Footer from "../../Ui/Footer";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import LogIn from "../../../assets/log-in.svg";
