@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Logo from "../assets/tourist-route.svg";
+import Logo from "../../assets/tourist-route.svg";
 import UserDropdown from "./UserDropdown";
 import Button from "./Button";
 
