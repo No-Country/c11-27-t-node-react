@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import ForgotPassword from "../../../assets/forgot-password.svg";
 
-const Register = () => {
+const RecoverPassword = ({ setAuthState }) => {
+  const [email, setEmail] = useState("");
+
+  const handlePasswordReset = () => {
+    console.log(email);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
@@ -25,15 +31,22 @@ const Register = () => {
               placeholder="Correo electrónico"
               type="email"
               leftIcon="envelope"
+              value={email}
+              setValue={setEmail}
             />
           </div>
-          <Button label="Restablecer contraseña" fullWidth />
+          <Button
+            label="Restablecer contraseña"
+            fullWidth
+            onClick={handlePasswordReset}
+          />
           <div className="flex items-center justify-center text-sm font-semibold">
             <Button
               label="Volver al inicio de sesión"
               variant="text"
               iconPosition="left"
               iconName="arrowLeft"
+              onClick={() => setAuthState("login")}
             />
           </div>
         </div>
@@ -42,4 +55,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RecoverPassword;

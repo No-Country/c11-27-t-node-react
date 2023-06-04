@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../Ui/Button";
 import CheckMail from "../../../assets/check-mail.svg";
 
-const CheckEmail = () => {
+const CheckEmail = ({ setAuthState }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">

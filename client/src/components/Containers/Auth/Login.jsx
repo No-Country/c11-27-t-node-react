@@ -1,11 +1,19 @@
-import React from "react";
-import Header from "../../Ui/Header";
-import Footer from "../../Ui/Footer";
+import React, { useState } from "react";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import LogIn from "../../../assets/log-in.svg";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../redux/slices/authSlice";
 
-const Register = () => {
+const Login = ({ setAuthState }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    dispatch(loginUser({ email, password }));
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
@@ -22,21 +30,33 @@ const Register = () => {
               placeholder="Correo electrónico"
               type="email"
               leftIcon="envelope"
+              value={email}
+              setValue={setEmail}
             />
             <Input
               placeholder="Contraseña"
               type="password"
               leftIcon="key"
               rightIcon="eye"
+              value={password}
+              setValue={setPassword}
             />
             <div className="flex items-center justify-end">
-              <Button label="¿Olvidaste tu contraseña?" variant="text" />
+              <Button
+                label="¿Olvidaste tu contraseña?"
+                variant="text"
+                onClick={() => setAuthState("recover-password")}
+              />
             </div>
           </div>
-          <Button label="Iniciar sesión" fullWidth />
+          <Button label="Iniciar sesión" fullWidth onClick={handleLogin} />
           <div className="flex items-center justify-center text-sm font-semibold">
             <div>¿No tienes una cuenta?</div>
-            <Button label="Regístrate ahora" variant="text" />
+            <Button
+              label="Regístrate ahora"
+              variant="text"
+              onClick={() => setAuthState("register")}
+            />
           </div>
         </div>
       </div>
@@ -44,4 +64,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

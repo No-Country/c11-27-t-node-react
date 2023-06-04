@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import SignUp from "../../../assets/sign-up.svg";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../../redux/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ setAuthState }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRegister = () => {
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+    dispatch(registerUser({ name, email, password }))
+      .then(() => {
+        navigate("/auth");
+      })
+      .catch(error => {
+        console.error("Registration failed:", error);
+      });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
@@ -16,29 +41,44 @@ const Register = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <Input placeholder="Nombre" leftIcon="user" />
+            <Input
+              placeholder="Nombre"
+              leftIcon="user"
+              value={name}
+              setValue={setName}
+            />
             <Input
               placeholder="Correo electrónico"
               type="email"
               leftIcon="envelope"
+              value={email}
+              setValue={setEmail}
             />
             <Input
               placeholder="Contraseña"
               type="password"
               leftIcon="key"
               rightIcon="eye"
+              value={password}
+              setValue={setPassword}
             />
             <Input
               placeholder="Confirmar contraseña"
               type="password"
               leftIcon="key"
               rightIcon="eye"
+              value={confirmPassword}
+              setValue={setConfirmPassword}
             />
           </div>
-          <Button label="Continuar" fullWidth />
+          <Button label="Continuar" fullWidth onClick={handleRegister} />
           <div className="flex items-center justify-center text-sm font-semibold">
             <div>¿Ya tienes una cuenta?</div>
-            <Button label="Inicia sesión" variant="text" />
+            <Button
+              label="Inicia sesión"
+              variant="text"
+              onClick={() => setAuthState("login")}
+            />
           </div>
         </div>
       </div>
