@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import LogIn from "../../../assets/log-in.svg";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../redux/slices/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
-    console.log(`Email: ${email}, Password: ${password}`);
+    dispatch(loginUser({ email, password }));
   };
 
   return (
