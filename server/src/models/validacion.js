@@ -8,7 +8,7 @@ const usuarioSchema = Joi.object({
 })
 
 const itinerarioSchema = Joi.object({
-    _id: Joi.string().required(),
+    userid: Joi.string().required(),
     destino: Joi.string().min(3).required(),
     fechainicio: Joi.string().required(),
     fechafinal: Joi.string().required(),

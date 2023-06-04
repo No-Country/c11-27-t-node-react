@@ -21,10 +21,18 @@ const register = async (req,res) => {
     if (error) {
       return res.status(400).json({ error: error.message });
     }
+
+    const  generateRandomString = (num) => {
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result1= Math.random().toString(36).substring(num);       
+
+    return result1;
+    }
     
     const user = { email };
     const accesstoken = generateAccessToken(user);
     const usuario = new usuarios({
+        userid: generateRandomString(5),
         name,
         email,
         password,
@@ -90,13 +98,13 @@ const login = async (req,res) => {
     res.header('authorization', accesstoken)
     res.status(200).json({
         status: 'success',
-        message: `Welcome ${email}`,
+        data: useremail.userid,
         token: accesstoken
       });
 }
 
 const actualizardatos = async (req,res) => {
-  const {_id, name, email, newemail, password, newpassword} = req.body
+  const {userid, name, password, newpassword} = req.body
 
   const useremail = await usuarios.findOne({ email });
   if (!useremail) {
@@ -113,9 +121,8 @@ const actualizardatos = async (req,res) => {
 
   const passwordbcrypt = await bcrypt.hash(newpassword, 12)
   await usuarios.findOneAndUpdate(
-    {_id},{
+    {userid},{
       name,
-      email:newemail,
       password: passwordbcrypt
     },
     {new:true})
@@ -193,8 +200,6 @@ const verifyRole = async (req, res, next) => {
   const user = await usuarios.findOne({ email: req.user.email });
 
   const role = user.role;
-
-  // console.log(role);
 
   if (role === 'admin') {
     next();

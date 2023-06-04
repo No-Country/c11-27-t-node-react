@@ -1,5 +1,6 @@
 const {Configuration,OpenAIApi} = require('openai')
 const {itinerarios} = require('../models/itinrariomodel')
+const {busqueda} = require('../models/busqueda')
 const {itinerarioSchema} = require('../models/validacion')
 const dotenv = require('dotenv')
 
@@ -14,7 +15,7 @@ const configuration = new Configuration({
 const openAi = new OpenAIApi(configuration);
 
 const generateBusqueda = async (req,res) => {
-    const {_id, destino, fechainicio, fechafinal, intereses} = req.body
+    const {userid, destino, fechainicio, fechafinal, intereses} = req.body
     const { error } = itinerarioSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.message });
@@ -46,15 +47,22 @@ const generateBusqueda = async (req,res) => {
            `,
         max_tokens: 250,
         temperature: 0.2,
-    })  
-    const busqueda = result.data.choices[0].text;
-    const itinerario = new itinerarios({
-        id_user: _id,
+    }) 
+
+    const busquedas = new busqueda({
+        id_user: userid,
         destino,
         fechainicio,
         fechafinal,
         intereses,
-        search: busqueda
+    })
+    await busquedas.save();
+    
+
+    const busca = result.data.choices[0].text;
+    const itinerario = new itinerarios({
+        id_user: userid,
+        search: busca
     })
 
     const databusqueda = await itinerario.save();
@@ -67,13 +75,17 @@ const generateBusqueda = async (req,res) => {
 
 const historial = async (req, res) => {
     try {
-        const{_id} = req.body
+        const{userid} = req.body
         
-      const historial = await itinerarios.find({id_user:_id});
-      console.log(historial)
+      // const historial = await itinerarios.find({id_user:userid});
+      const busquedas = await busqueda.find({id_user:userid});
+
+      const user = await itinerarios.find({ id_user:userid});
+
       res.status(200).json({
         status: 'success',
-        data: historial,
+        data: user,
+        datos: busquedas
       });
     } catch (error) {
       res.status(404).json({ error: error.message });

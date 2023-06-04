@@ -4,10 +4,6 @@ const Schema = mongoose.Schema
 
 const itinerarioSchema = new Schema({
     id_user: {type: String},
-    destino: {type: String},
-    fechainicio: {type:String},
-    fechafinal: {type:String},
-    intereses: {type:String},
     search: {type: String}
 })
 

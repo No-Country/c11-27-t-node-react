@@ -6,11 +6,11 @@ const routeruser = express.Router()
 
 routeruser.post('/', register)
 routeruser.post('/login', login)
+routeruser.put('/reset', actualizarcontrasena)
 
 routeruser.use(protect) //proteccion de token
 routeruser.post('/record', historial)
 routeruser.delete('/', eliminarcuenta)
-routeruser.put('/reset', actualizarcontrasena)
 routeruser.post('/search', generateBusqueda)
 routeruser.put('/renew', actualizardatos)
 
