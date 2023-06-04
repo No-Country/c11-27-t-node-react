@@ -5,7 +5,7 @@ import LogIn from "../../../assets/log-in.svg";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../redux/slices/authSlice";
 
-const Login = () => {
+const Login = ({ setAuthState }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
