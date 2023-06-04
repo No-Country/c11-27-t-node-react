@@ -42,13 +42,21 @@ const Login = () => {
               setValue={setPassword}
             />
             <div className="flex items-center justify-end">
-              <Button label="¿Olvidaste tu contraseña?" variant="text" />
+              <Button
+                label="¿Olvidaste tu contraseña?"
+                variant="text"
+                onClick={() => setAuthState("recover-password")}
+              />
             </div>
           </div>
           <Button label="Iniciar sesión" fullWidth onClick={handleLogin} />
           <div className="flex items-center justify-center text-sm font-semibold">
             <div>¿No tienes una cuenta?</div>
-            <Button label="Regístrate ahora" variant="text" />
+            <Button
+              label="Regístrate ahora"
+              variant="text"
+              onClick={() => setAuthState("register")}
+            />
           </div>
         </div>
       </div>
