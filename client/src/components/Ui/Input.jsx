@@ -51,6 +51,7 @@ const Input = ({
   type = "text",
   value,
   setValue,
+  disabled = false,
 }) => {
   const [isFocused, setFocused] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -58,33 +59,52 @@ const Input = ({
     type === "password" && !isPasswordVisible ? "password" : "text";
 
   const handleEyeClick = () => {
-    setPasswordVisible(!isPasswordVisible);
+    if (!disabled) {
+      setPasswordVisible(!isPasswordVisible);
+    }
   };
+
+  const disabledStyle =
+    "cursor-not-allowed bg-neutral-200 border-neutral-300 text-neutral-300";
+  const enabledStyle = isFocused
+    ? "border-2 border-green-400 text-neutral-800 bg-white"
+    : "border-2 border-neutral-200 text-neutral-800 bg-white";
+
+  const iconColor = disabled
+    ? "text-neutral-300"
+    : isFocused
+    ? "text-green-500"
+    : "text-neutral-300";
 
   return (
     <div
       className={`flex w-full items-center gap-2.5 rounded p-2 ${
-        isFocused ? "border-2 border-green-400" : "border-2 border-neutral-200"
-      } bg-white`}
+        disabled ? disabledStyle : enabledStyle
+      }`}
     >
       {leftIcon && (
         <FontAwesomeIcon
           icon={icons[leftIcon]}
-          className={`text-base ${
-            isFocused ? "text-green-500" : "text-neutral-300"
-          }`}
+          className={`text-base ${iconColor}`}
         />
       )}
       <input
         type={inputType}
-        className="w-full flex-grow text-neutral-800 outline-none placeholder:font-semibold placeholder:text-neutral-300"
+        className={`w-full flex-grow outline-none placeholder:font-semibold ${
+          disabled
+            ? "cursor-not-allowed bg-neutral-200 text-neutral-400"
+            : "bg-white text-neutral-800"
+        }`}
         placeholder={placeholder}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         value={value}
         onChange={event => {
-          setValue(event.target.value);
+          if (!disabled) {
+            setValue(event.target.value);
+          }
         }}
+        disabled={disabled}
         required
       />
       {rightIcon && (
@@ -97,9 +117,7 @@ const Input = ({
               : icons[rightIcon]
           }
           onClick={type === "password" ? handleEyeClick : null}
-          className={`cursor-pointer text-base ${
-            isFocused ? "text-green-500" : "text-neutral-300"
-          }`}
+          className={`cursor-pointer text-base ${iconColor}`}
         />
       )}
     </div>
