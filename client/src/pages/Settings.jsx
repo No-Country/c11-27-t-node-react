@@ -1,7 +1,15 @@
 import React from "react";
+import Header from "../components/Ui/Header";
+import AccountInformation from "../components/Containers/AccountInformation";
+import Footer from "../components/Ui/Footer";
 
 const Settings = () => {
-  return <div className="text-2xl font-bold">Settings</div>;
+  return (
+    <>
+      <Header pageType="loggedin" />
+      <AccountInformation />
+      <Footer />
+    </>
+  );
 };
-
 export default Settings;
