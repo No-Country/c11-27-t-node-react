@@ -3,7 +3,7 @@ const { itinerarios } = require('../models/itinrario');
 const dotenv = require('dotenv');
 
 dotenv.config({
-	path: '../.env',
+	path: './.env',
 });
 
 const configuration = new Configuration({
