@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../components/Button";
+import Button from "../Ui/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,9 +10,8 @@ const icons = {
 
 const tagColors = ["bg-cyan-500", "bg-red-500", "bg-amber-500"];
 
-const InputTags = ({ placeholder, leftIcon }) => {
+const InputTags = ({ placeholder, leftIcon, tags, setTags }) => {
   const [isFocused, setFocused] = useState(false);
-  const [tags, setTags] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = event => {
