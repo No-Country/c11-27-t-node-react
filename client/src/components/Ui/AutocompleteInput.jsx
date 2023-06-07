@@ -7,31 +7,36 @@ const icons = {
   mapLocationDot: faMapLocationDot,
 };
 
-const AutocompleteInput = ({ placeholder, leftIcon }) => {
-  const [inputValue, setInputValue] = useState("");
+const AutocompleteInput = ({ placeholder, leftIcon, value, setValue }) => {
   const [isFocused, setFocused] = useState(false);
   const [options, setOptions] = useState([]);
+  const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
-    if (inputValue !== "") {
-      axios
-        .get(
-          `https://us1.locationiq.com/v1/autocomplete.php?key=${
-            import.meta.env.VITE_LOCATIONIQ_KEY
-          }&q=${inputValue}&format=json&limit=5&accept-language=es`,
-        )
-        .then(response => {
-          const options = response.data.map(item => item.display_name);
-          setOptions(options);
-        })
-        .catch(error => {
-          console.error(error);
-        });
+    if (value !== "") {
+      if (timerId) clearTimeout(timerId);
+      const newTimerId = setTimeout(() => {
+        axios
+          .get(
+            `https://us1.locationiq.com/v1/autocomplete.php?key=${
+              import.meta.env.VITE_LOCATIONIQ_KEY
+            }&q=${value}&format=json&limit=5&accept-language=es`,
+          )
+          .then(response => {
+            const options = response.data.map(item => item.display_name);
+            setOptions(options);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }, 500);
+
+      setTimerId(newTimerId);
     }
-  }, [inputValue]);
+  }, [value]);
 
   const handleOptionClick = option => {
-    setInputValue(option);
+    setValue(option);
     setFocused(false);
   };
 
@@ -54,10 +59,10 @@ const AutocompleteInput = ({ placeholder, leftIcon }) => {
         className="w-full flex-grow text-neutral-800 outline-none placeholder:font-semibold placeholder:text-neutral-300"
         placeholder={placeholder}
         onFocus={() => setFocused(true)}
-        value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
+        value={value}
+        onChange={e => setValue(e.target.value)}
       />
-      {isFocused && inputValue !== "" && (
+      {isFocused && value !== "" && (
         <div className="absolute left-0 top-full z-10 mt-2 w-full rounded border border-neutral-200 bg-white shadow-lg">
           {options.map(option => (
             <div
