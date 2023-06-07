@@ -1,60 +1,103 @@
 const {Configuration,OpenAIApi} = require('openai')
-const {itinerarios} = require('../models/itinrario')
+const Joi = require('joi')
+const {itinerarios} = require('../models/itinrariomodel')
+const {busquedaopen} = require('../models/busqueda')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path:'../.env'
-})
+	path: './.env',
+});
 
 const configuration = new Configuration({
-	apiKey: process.env.OPENAI_API_KEY || ''
+	apiKey: process.env.OPENAI_API_KEY || '',
 });
 
 const openAi = new OpenAIApi(configuration);
 
-const generateBusqueda = async (req,res) => {
-    const {_id, destino, fechainicio, fechafinal, intereses} = req.body
-    const result = await openAi.createCompletion({
-        model: "text-davinci-003",
-        prompt:`Estoy planeando un viaje a ${destino} desde el ${fechainicio} hasta el ${fechafinal}. Estoy especialmente interesado en ${intereses}. Me gustaría que me generes un itinerario en formato JSON que incluya:
-        Un número de día, un título temático para cada día basado en las actividades planeadas, y una lista de actividades. Cada actividad debe incluir un lugar, google maps url del lugar, una breve descripción y la razón por la cual se recomienda.
-        Un ejemplo de la estructura deseada sería:
-        {
-            'itinerary': [ 
-           { 
-           'day': 1,
-            'title': 'Inmersión en la Historia Romana',
-            'activities': [ 
-           { 
-           'place': 'Coliseo Romano',
-           'googleMapsUrl':'https://www.google.com/maps/place/Colosseum/@41.8902102,12.4900422,17z/data=!3m1!4b1!4m6!3m5!1s0x132f61b6532013ad:0x28f1c82e908503c4!8m2!3d41.8902102!4d12.4922309!16zL20vMGQ1cXg',
-            'description': 'El mayor anfiteatro del mundo y un testimonio de la grandeza del Imperio Romano.',
-            'reason': 'Es un lugar que no puedes dejar de visitar debido a su relevancia histórica y arquitectónica.' }, 
-           {'place': 'Foro Romano',
-           'googleMapsUrl':'https://www.google.com/maps/place/Roman+Forum/@41.8917767,12.4798332,15.79z/data=!4m6!3m5!1s0x132f61b383a9cdef:0xfa914007c0ec7de6!8m2!3d41.8924623!4d12.485325!16zL20vMG4xNnQ', 
-           'description': 'Era el centro de la vida política, económica y religiosa en la antigua Roma.',
-           'reason': 'Es recomendable por su valor histórico y las impresionantes ruinas.' } ] },
-            // Y así sucesivamente para cada día del viaje 
-           ]
-           }
-           `,
-        max_tokens: 250,
-        temperature: 0.2,
-    })  
-    const busqueda = result.data.choices[0].text;
-    const itinerario = new itinerarios({
-        id_user: _id,
-        search: busqueda
-    })
+const actividadSchema = Joi.object({
+  Lugar: Joi.string().required(),
+  'Google Maps URL': Joi.string().uri().required(),
+  Descripción: Joi.string().required(),
+  Razón: Joi.string().required(),
+})
 
-    await itinerario.save();
+const diaSchema = Joi.object({
+  Día: Joi.number().integer().min(1).required(),
+  Título: Joi.string().required(),
+  Actividades: Joi.array().items(actividadSchema).required(),
+})
+
+const itinerarioSchema = Joi.array().items(diaSchema).required()
+
+const generateBusqueda = async (req,res) => {
+    const { userid, destino, fechainicio, fechafinal, intereses} = req.body
+
+    let result
+    let busqueda
+    let validationResult
+
+    do{ 
+        result = await openAi.createCompletion({
+        model: "text-davinci-003",
+        prompt:`Estoy planeando un viaje a ${destino} desde el ${fechainicio} hasta el ${fechafinal}. Estoy especialmente interesado en ${intereses}. Genera un itinerario en formato JSON que incluya:
+        Un número de día, un título temático para cada día basado en las actividades planeadas, y una lista de actividades. Cada actividad debe incluir un lugar, google maps url del lugar (ejemplo:https://www.google.com/maps/place/Vatican+City/@41.902916,12.453389,15z/data=!3m1!4b1!4m5!3m4!1s0x1325890a57d42d3d:0x94f9ab23a7eb0!8m2!3d41.902916!4d12.453389), una breve descripción y la razón por la cual se recomienda.`,
+        max_tokens: 3000,
+        temperature: 0.2,
+    }) 
+
+    let cleanResponse = result.data.choices[0].text
+    .replace(/[\r\n]+/g, '')
+    .replace(/[\s]{2,10}/g, ' ')
+
+  const busqueda = JSON.parse(cleanResponse)
+
+  busqueda.destino = destino
+  busqueda.fechainicio = fechainicio
+  busqueda.fechafinal = fechafinal
+  validationResult = itinerarioSchema.validate(busqueda.Itinerario)
+
+} while (validationResult.error)
+
+  const itinerario = new itinerarios({
+    search: JSON.stringify(busqueda, null, 2),
+  })
+
+  console.log(JSON.stringify(itinerario, null, 2))
+   const databusqueda = await itinerario.save();
+
+    const busquedas = new busquedaopen({
+        id_user: userid,
+        destino,
+        fechainicio,
+        fechafinal,
+        intereses,
+        ID_itinerario: databusqueda._id
+    })
+    await busquedas.save();
 
     res.status(200).json({
         success: true,
-        data: busqueda
+        ID: databusqueda._id,
+        data: databusqueda
     })
 }
 
+const historial = async (req, res) => {
+    try {
+        const{userid} = req.body
+
+      const busquedas = await busquedaopen.find({id_user:userid});
+
+      res.status(200).json({
+        status: 'success',
+        datos: busquedas
+      });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  };
+
 module.exports = {
-    generateBusqueda
+    generateBusqueda,
+    historial
 }
