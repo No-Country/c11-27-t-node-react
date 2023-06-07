@@ -7,9 +7,8 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path:'../.env'
-})
-
+	path: './.env',
+});
 
 const generateAccessToken = (user) => {
     return jwt.sign(user, process.env.SECRET, {expiresIn: '2h'} );
@@ -242,17 +241,17 @@ const usuarione = async (req,res) => {
 }
 
 const protect = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    res.status(401).json({
-      message: 'No tienes autorizacion para acceder a este recurso',
-    });
-  }
-}
+	try {
+		const token = req.headers.authorization.split(' ')[1];
+		const decoded = jwt.verify(token, process.env.SECRET);
+		req.user = decoded;
+		next();
+	} catch (error) {
+		res.status(401).json({
+			message: 'No tienes autorizacion para acceder a este recurso',
+		});
+	}
+};
 
 const verifyRole = async (req, res, next) => {
   const user = await usuarios.findOne({ email: req.user.email });

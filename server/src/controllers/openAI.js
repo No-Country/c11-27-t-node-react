@@ -5,11 +5,11 @@ const {busquedaopen} = require('../models/busqueda')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path:'../.env'
-})
+	path: './.env',
+});
 
 const configuration = new Configuration({
-	apiKey: process.env.OPENAI_API_KEY || ''
+	apiKey: process.env.OPENAI_API_KEY || '',
 });
 
 const openAi = new OpenAIApi(configuration);
@@ -54,10 +54,8 @@ const generateBusqueda = async (req,res) => {
   busqueda.destino = destino
   busqueda.fechainicio = fechainicio
   busqueda.fechafinal = fechafinal
-  // console.log(open)
   validationResult = itinerarioSchema.validate(busqueda.Itinerario)
 
-  // console.log(validationResult)
 } while (validationResult.error)
 
   const itinerario = new itinerarios({

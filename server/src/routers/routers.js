@@ -4,11 +4,11 @@ const {generateBusqueda, historial} = require('../controllers/openAI')
 
 const routeruser = express.Router()
 
-routeruser.post('/', register)
+routeruser.post('/register', register)
 routeruser.post('/login', login)
 routeruser.post('/send', enviaremail)
 
-routeruser.use(protect) //proteccion de token
+routeruser.use(protect)
 routeruser.get('/me', usuarione)
 routeruser.post('/record', historial)
 routeruser.delete('/', eliminarcuenta)
