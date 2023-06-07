@@ -21,11 +21,11 @@ const DayCard = ({ day }) => {
           className="pb-1 text-base text-sky-500"
         />
         <div className="text-lg font-semibold text-neutral-800">
-          {day.title}
+          Día {day.Día}: {day.Título}
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {day.activities.map((activity, index) => (
+        {day.Actividades.map((actividad, index) => (
           <div key={index}>
             <div className="flex gap-2">
               <FontAwesomeIcon
@@ -34,14 +34,14 @@ const DayCard = ({ day }) => {
               />
               <div className="flex flex-col">
                 <div className="text-base font-semibold text-neutral-800">
-                  {activity.title}
+                  {actividad.Lugar}
                 </div>
                 <div
                   className={`text-sm font-normal text-neutral-700 ${
                     isExpanded ? "" : "line-clamp-2"
                   }`}
                 >
-                  {activity.description}
+                  {actividad.Descripción}. {actividad.Razón}
                 </div>
               </div>
             </div>
@@ -53,6 +53,9 @@ const DayCard = ({ day }) => {
                   iconPosition="right"
                   iconName="mapLocationDot"
                   color="blue"
+                  onClick={() => {
+                    window.open(actividad["Google Maps URL"], "_blank");
+                  }}
                 />
               </div>
             )}
