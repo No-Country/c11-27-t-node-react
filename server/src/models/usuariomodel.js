@@ -6,13 +6,14 @@ const Schema = mongoose.Schema
 const usuarioSchema = new Schema({
     name: {type:String},    
     userid: {type:String},
-    email: {type:String, unique:true},
+    email: {type:String},
     password: {type: String},
     role:{
         type: String,
         enum: ['admin', 'user'],
         default: 'user',
-      }
+      },
+    token: {type:String}
 })
 
 usuarioSchema.pre('save', async function (next) {

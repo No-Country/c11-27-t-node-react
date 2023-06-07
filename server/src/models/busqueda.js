@@ -8,10 +8,11 @@ const busquedaSchema = new Schema({
     fechainicio: {type:String},
     fechafinal: {type:String},
     intereses: {type:String},
+    ID_itinerario: {type:String},
 })
 
-const busqueda = mongoose.model('busqueda', busquedaSchema)
+const busquedaopen = mongoose.model('busquedaopen', busquedaSchema)
 
 module.exports = {
-    busqueda
+    busquedaopen
 }

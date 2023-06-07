@@ -1,18 +1,20 @@
 const express = require('express')
-const {register, listusuarios, listaitinerarios, login, actualizarcontrasena, actualizardatos, eliminarcuenta, protect, verifyRole} = require('../controllers/usuarioscontroller')
+const {register, listusuarios, listaitinerarios, login, actualizarcontrasena, enviaremail, actualizardatos, eliminarcuenta, usuarione, protect, verifyRole} = require('../controllers/usuarioscontroller')
 const {generateBusqueda, historial} = require('../controllers/openAI')
 
 const routeruser = express.Router()
 
 routeruser.post('/', register)
 routeruser.post('/login', login)
-routeruser.put('/reset', actualizarcontrasena)
+routeruser.post('/send', enviaremail)
 
 routeruser.use(protect) //proteccion de token
+routeruser.get('/me', usuarione)
 routeruser.post('/record', historial)
 routeruser.delete('/', eliminarcuenta)
 routeruser.post('/search', generateBusqueda)
 routeruser.put('/renew', actualizardatos)
+routeruser.put('/reset', actualizarcontrasena)
 
 routeruser.use(verifyRole)
 routeruser.get('/', listusuarios)
