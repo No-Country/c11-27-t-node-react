@@ -1,5 +1,8 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { logout } from "../../redux/slices/authSlice";
 import {
   faUserCircle,
   faCog,
@@ -19,6 +22,8 @@ const icons = {
 const UserDropdown = ({ version }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleOpen = event => {
     event.stopPropagation();
@@ -28,25 +33,26 @@ const UserDropdown = ({ version }) => {
   const handleHome = event => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-    console.log("Ir a inicio");
+    navigate("/home");
   };
 
   const handleHistory = event => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-    console.log("Ver historial");
+    navigate("/history");
   };
 
   const handleSettings = event => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-    console.log("Ir a ajustes");
+    navigate("/settings");
   };
 
   const handleLogout = event => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-    console.log("Cerrar sesión");
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
