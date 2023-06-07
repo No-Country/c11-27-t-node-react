@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateRangeInput.css";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import es from "date-fns/locale/es";
 
 const icons = {
@@ -41,20 +41,26 @@ const CustomInput = React.forwardRef(({ value, onClick, placeholder }, ref) => {
   );
 });
 
-const DateRangeInput = ({ placeholder }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
+const DateRangeInput = ({
+  placeholder,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}) => {
   const dateToString = date => {
     return date ? format(date, "d 'de' MMMM 'de' yyyy", { locale: es }) : "";
   };
 
   let inputVal = "";
+
   if (startDate && endDate) {
     inputVal = `${dateToString(startDate)} - ${dateToString(endDate)}`;
   } else if (!startDate && !endDate) {
     inputVal = "";
   }
+
+  const maxEndDate = startDate ? addDays(startDate, 4) : null;
 
   return (
     <DatePicker
@@ -70,6 +76,8 @@ const DateRangeInput = ({ placeholder }) => {
       placeholderText={placeholder}
       customInput={<CustomInput value={inputVal} placeholder={placeholder} />}
       dateFormat="d 'de' MMMM 'de' yyyy"
+      minDate={startDate}
+      maxDate={maxEndDate}
     />
   );
 };
