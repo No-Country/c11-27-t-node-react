@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 function PrivateRoute() {
-  const auth = useSelector(state => state.auth);
+  const authToken = localStorage.getItem("authToken");
 
-  if (!auth.isAuthenticated) {
+  if (!authToken) {
     return <Navigate to="/auth" replace />;
   }
 

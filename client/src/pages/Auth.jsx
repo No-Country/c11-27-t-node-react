@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Ui/Header";
 import Footer from "../components/Ui/Footer";
 import Login from "../components/Containers/Auth/Login";
@@ -11,13 +10,14 @@ import CheckEmail from "../components/Containers/Auth/CheckEmail";
 const Auth = () => {
   const [authState, setAuthState] = useState("login");
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const location = useLocation();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken && location.pathname !== "/home") {
       navigate("/home");
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate, location]);
 
   let authComponent;
   switch (authState) {
