@@ -1,13 +1,25 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { recoverUserPassword } from "../../../redux/slices/userSlice";
 import Input from "../../Ui/Input";
 import Button from "../../Ui/Button";
 import ForgotPassword from "../../../assets/forgot-password.svg";
 
 const RecoverPassword = ({ setAuthState }) => {
   const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
 
   const handlePasswordReset = () => {
-    console.log(email);
+    dispatch(recoverUserPassword({ email }))
+      .unwrap()
+      .then(() => {
+        setAuthState("check-email");
+      })
+      .catch(error => {
+        if (error.message) {
+          alert(error.message);
+        }
+      });
   };
 
   return (
