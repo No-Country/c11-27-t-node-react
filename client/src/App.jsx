@@ -3,6 +3,7 @@ import PrivateRoute from "./components/Utils/PrivateRoute";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
+import Itinerary from "./pages/Itinerary";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -20,6 +21,7 @@ function App() {
         />
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/itinerary/:id" element={<Itinerary />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
