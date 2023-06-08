@@ -8,6 +8,7 @@ import { generateItinerary } from "../../redux/slices/itinerarySlice";
 import Loader from "../Ui/Loader";
 
 const CustomizeTrip = ({ setItineraryState, tripData }) => {
+  const iduser = localStorage.getItem("iduser");
   const navigate = useNavigate();
 
   const isLoading = useSelector(state => state.loading);
@@ -32,6 +33,7 @@ const CustomizeTrip = ({ setItineraryState, tripData }) => {
     const itineraryData = {
       ...tripData,
       intereses: tags,
+      userid: iduser,
     };
 
     dispatch(generateItinerary(itineraryData))
