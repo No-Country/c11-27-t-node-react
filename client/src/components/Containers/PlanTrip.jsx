@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import AutocompleteInput from "../Ui/AutocompleteInput";
 import DateRangeInput from "../Ui/DateRangeInput";
 import Button from "../Ui/Button";
 import Itinerary from "../../assets/itinerary.svg";
+import { format } from "date-fns";
+import es from "date-fns/locale/es";
 
-const PlanTrip = () => {
+const PlanTrip = ({ setItineraryState, setTripData }) => {
+  const [location, setLocation] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const handlePlanTrip = () => {
+    const formatDate = date => {
+      return date ? format(date, "d 'de' MMMM 'de' yyyy", { locale: es }) : "";
+    };
+
+    setTripData({
+      destino: location,
+      fechainicio: formatDate(startDate),
+      fechafinal: formatDate(endDate),
+    });
+
+    setItineraryState("customize-trip");
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex  flex-col items-center gap-8 px-4 py-2 lg:flex-row lg:justify-center lg:rounded lg:bg-white lg:p-8 ">
@@ -24,10 +44,22 @@ const PlanTrip = () => {
             <AutocompleteInput
               placeholder="Introduce tu destino"
               leftIcon="mapLocationDot"
+              value={location}
+              setValue={setLocation}
             />
-            <DateRangeInput placeholder="Desde - Hasta" />
+            <DateRangeInput
+              placeholder="Desde - Hasta"
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
           </div>
-          <Button label="¡Vamos, a personalizar!" fullWidth />
+          <Button
+            label="¡Vamos, a personalizar!"
+            fullWidth
+            onClick={handlePlanTrip}
+          />
         </div>
         <img
           src={Itinerary}
