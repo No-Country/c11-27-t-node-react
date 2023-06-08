@@ -4,7 +4,6 @@ import Button from "../../Ui/Button";
 import SignUp from "../../../assets/sign-up.svg";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../redux/slices/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const Register = ({ setAuthState }) => {
   const [name, setName] = useState("");
@@ -13,7 +12,6 @@ const Register = ({ setAuthState }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -21,11 +19,15 @@ const Register = ({ setAuthState }) => {
       return;
     }
     dispatch(registerUser({ name, email, password }))
+      .unwrap()
       .then(() => {
-        navigate("/auth");
+        alert("Registrado correctamente");
+        setAuthState("login");
       })
       .catch(error => {
-        console.error("Registration failed:", error);
+        if (error.message) {
+          alert(error.message);
+        }
       });
   };
 

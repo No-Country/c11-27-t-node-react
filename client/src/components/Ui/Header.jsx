@@ -20,7 +20,7 @@ const Header = ({ pageType }) => {
   if (pageType === "auth") {
     return (
       <header className="sticky top-0 z-50 flex items-center justify-start bg-neutral-50 p-4">
-        <Link to="/">
+        <Link to="/" className="flex items-center gap-2">
           <img
             src={Logo}
             alt="Tourist Route Logo"

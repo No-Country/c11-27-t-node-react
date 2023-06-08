@@ -26,6 +26,7 @@ const CheckEmail = ({ setAuthState }) => {
               label="prueba con otra dirección de correo
               electrónico"
               variant="text"
+              onClick={() => setAuthState("recover-password")}
             />
           </div>
         </div>

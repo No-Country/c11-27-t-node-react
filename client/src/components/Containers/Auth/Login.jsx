@@ -4,14 +4,25 @@ import Button from "../../Ui/Button";
 import LogIn from "../../../assets/log-in.svg";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setAuthState }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password }))
+      .unwrap()
+      .then(() => {
+        navigate("/home");
+      })
+      .catch(error => {
+        if (error.message) {
+          alert(error.message);
+        }
+      });
   };
 
   return (

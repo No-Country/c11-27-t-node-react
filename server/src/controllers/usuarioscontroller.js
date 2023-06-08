@@ -11,7 +11,7 @@ dotenv.config({
 })
 
 const generateAccessToken = user => {
-  return jwt.sign(user, process.env.SECRET, { expiresIn: '2h' })
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '2h' })
 }
 
 const register = async (req, res) => {
@@ -25,10 +25,11 @@ const register = async (req, res) => {
   const useremail = await usuarios.findOne({ email })
 
   if (useremail) {
-    return res.json({
-      message: 'email ya registrado',
+    return res.status(409).json({
+      message: 'Email ya registrado',
     })
   }
+
   const generateRandomString = num => {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -49,39 +50,11 @@ const register = async (req, res) => {
   const accesstoken = generateAccessToken(user)
   res.header('authorization', accesstoken)
   res.status(200).json({
-    status: 'success',
-    message: 'user successfully created',
+    status: 'Success',
+    message: 'Usuario registrado exitosamente',
     token: accesstoken,
     data: usua,
   })
-}
-
-const listusuarios = async (req, res) => {
-  try {
-    const list = await usuarios.find()
-    res.json({
-      status: 'success',
-      message: 'lista de usuarios',
-      count: list.length,
-      data: list,
-    })
-  } catch (error) {
-    res.status(404).json({ error: error.message })
-  }
-}
-
-const listaitinerarios = async (req, res) => {
-  try {
-    const list = await itinerarios.find()
-    res.status(200).json({
-      status: 'success',
-      message: 'lista de itinerario',
-      count: list.length,
-      data: list,
-    })
-  } catch (error) {
-    res.status(404).json({ error: error.message })
-  }
 }
 
 const login = async (req, res) => {
@@ -89,14 +62,14 @@ const login = async (req, res) => {
 
   const useremail = await usuarios.findOne({ email })
   if (!useremail) {
-    res.json({
-      message: 'email incorrecto o no existe',
+    return res.status(401).json({
+      message: 'Email incorrecto o no existe',
     })
   }
   const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
   if (!userpasswordbcry) {
-    return res.json({
-      message: 'contraseña incorrecta',
+    return res.status(401).json({
+      message: 'Contraseña incorrecta',
     })
   }
 
@@ -104,60 +77,10 @@ const login = async (req, res) => {
   const accesstoken = generateAccessToken(user)
   res.header('authorization', accesstoken)
   res.status(200).json({
-    status: 'success',
+    status: 'Success',
     idgeneral: useremail._id,
     iduser: useremail.userid,
     token: accesstoken,
-  })
-}
-
-const actualizardatos = async (req, res) => {
-  const { name, password, newpassword } = req.body
-
-  const useremail = await usuarios.findOne({ email: req.user.email })
-
-  const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
-  if (!userpasswordbcry) {
-    return res.json({
-      message: 'incorrect password',
-    })
-  }
-
-  const passwordbcrypt = await bcrypt.hash(newpassword, 12)
-  await usuarios.findOneAndUpdate(
-    { email: req.user.email },
-    {
-      name,
-      password: passwordbcrypt,
-    },
-    { new: true },
-  )
-
-  res.status(200).json({
-    status: 'success',
-    message: 'datos actualizados con exito',
-    data: {
-      name,
-    },
-  })
-}
-
-const actualizarcontrasena = async (req, res) => {
-  const { password } = req.body
-
-  const passwordbcrypt = await bcrypt.hash(password, 12)
-  await usuarios.findOneAndUpdate(
-    { email: req.user.email },
-    {
-      password: passwordbcrypt,
-      token: '',
-    },
-    { new: true },
-  )
-
-  res.status(200).json({
-    status: 'success',
-    message: 'contraseña actualizada con exito',
   })
 }
 
@@ -166,8 +89,8 @@ const enviaremail = async (req, res) => {
 
   const useremail = await usuarios.findOne({ email })
   if (!useremail) {
-    res.json({
-      message: 'email incorrecto o no existe',
+    return res.status(404).json({
+      message: 'Email incorrecto o no existe',
     })
   }
 
@@ -194,44 +117,34 @@ const enviaremail = async (req, res) => {
   const menssage = {
     from: process.env.EMAIL_USERNAME,
     to: email,
-    subject: 'TITULO DE EMAIL',
-    text: `${process.env.WEBAPP_URL}/api/v1/reset/${accesstoken}/${useremail._id}`,
+    subject: 'Recuperación de contraseña',
+    text: `${process.env.WEBAPP_URL}/reset-password/${accesstoken}/${useremail._id}`,
   }
 
   const transport = nodemailer.createTransport(config)
   const info = await transport.sendMail(menssage)
   res.status(200).json({
-    message: 'mensaje enviado con exito',
+    message: 'Mensaje enviado con exito',
   })
 }
 
-const eliminarcuenta = async (req, res) => {
-  try {
-    const { email, password } = req.body
+const actualizarcontrasena = async (req, res) => {
+  const { newPassword } = req.body
 
-    const useremail = await usuarios.findOne({ email })
-    if (!useremail) {
-      res.json({
-        message: 'incorrect email or does not exist',
-      })
-    }
-    const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
-    if (!userpasswordbcry) {
-      return res.json({
-        message: 'incorrect password',
-      })
-    }
+  const passwordbcrypt = await bcrypt.hash(newPassword, 12)
+  await usuarios.findOneAndUpdate(
+    { email: req.user.email },
+    {
+      password: passwordbcrypt,
+      token: '',
+    },
+    { new: true },
+  )
 
-    await usuarios.deleteOne({ email: email })
-    res.status(200).json({
-      status: 'success',
-      message: 'usuario eliminado',
-    })
-  } catch (error) {
-    res.status(401).json({
-      message: 'falla en el metodo eliminarcuenta',
-    })
-  }
+  res.status(200).json({
+    status: 'Success',
+    message: 'Contraseña actualizada con exito',
+  })
 }
 
 const usuarione = async (req, res) => {
@@ -243,6 +156,94 @@ const usuarione = async (req, res) => {
     })
   } catch (error) {
     res.status(401).json(error)
+  }
+}
+
+const actualizardatos = async (req, res) => {
+  const { name, password, newpassword } = req.body
+
+  const useremail = await usuarios.findOne({ email: req.user.email })
+
+  const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
+  if (!userpasswordbcry) {
+    return res.json({
+      message: 'Contraseña incorrecta',
+    })
+  }
+
+  const passwordbcrypt = await bcrypt.hash(newpassword, 12)
+  await usuarios.findOneAndUpdate(
+    { email: req.user.email },
+    {
+      name,
+      password: passwordbcrypt,
+    },
+    { new: true },
+  )
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Datos actualizados con exito',
+    data: {
+      name,
+    },
+  })
+}
+
+const eliminarcuenta = async (req, res) => {
+  try {
+    const { email, password } = req.body
+
+    const useremail = await usuarios.findOne({ email })
+    if (!useremail) {
+      res.json({
+        message: 'Email incorrecto o no existe',
+      })
+    }
+    const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
+    if (!userpasswordbcry) {
+      return res.json({
+        message: 'Contraseña incorrecta',
+      })
+    }
+
+    await usuarios.deleteOne({ email: email })
+    res.status(200).json({
+      status: 'Success',
+      message: 'Usuario eliminado',
+    })
+  } catch (error) {
+    res.status(401).json({
+      message: 'Falla en el metodo eliminar cuenta',
+    })
+  }
+}
+
+const listusuarios = async (req, res) => {
+  try {
+    const list = await usuarios.find()
+    res.json({
+      status: 'Success',
+      message: 'Lista de usuarios',
+      count: list.length,
+      data: list,
+    })
+  } catch (error) {
+    res.status(404).json({ error: error.message })
+  }
+}
+
+const listaitinerarios = async (req, res) => {
+  try {
+    const list = await itinerarios.find()
+    res.status(200).json({
+      status: 'Success',
+      message: 'Lista de itinerario',
+      count: list.length,
+      data: list,
+    })
+  } catch (error) {
+    res.status(404).json({ error: error.message })
   }
 }
 
@@ -275,14 +276,14 @@ const verifyRole = async (req, res, next) => {
 
 module.exports = {
   register,
+  login,
+  enviaremail,
+  actualizarcontrasena,
+  usuarione,
+  actualizardatos,
+  eliminarcuenta,
   listusuarios,
   listaitinerarios,
-  login,
-  actualizarcontrasena,
-  enviaremail,
-  eliminarcuenta,
-  actualizardatos,
-  usuarione,
   protect,
   verifyRole,
 }

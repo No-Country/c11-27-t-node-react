@@ -17,6 +17,9 @@ const Auth = () => {
     case "recover-password":
       authComponent = <RecoverPassword setAuthState={setAuthState} />;
       break;
+    case "check-email":
+      authComponent = <CheckEmail setAuthState={setAuthState} />;
+      break;
     default:
       authComponent = <Login setAuthState={setAuthState} />;
   }
