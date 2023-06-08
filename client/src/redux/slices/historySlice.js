@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
 import { setLoading } from "./loadingSlice";
 
-export const fetchHistory = createAsyncThunk(
+export const getUserHistory = createAsyncThunk(
   "history/fetch",
-  async (userId, { dispatch, rejectWithValue }) => {
+  async (userid, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading(true));
       const response = await axiosInstance.post("/api/v1/record", {
-        _id: userId,
+        userid: userid,
       });
       dispatch(setLoading(false));
       return response.data;
@@ -29,11 +29,11 @@ const historySlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchHistory.fulfilled, (state, action) => {
+      .addCase(getUserHistory.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.history = action.payload.data;
+        state.history = action.payload.datos;
       })
-      .addCase(fetchHistory.rejected, (state, action) => {
+      .addCase(getUserHistory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
