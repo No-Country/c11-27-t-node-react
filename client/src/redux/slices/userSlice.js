@@ -47,6 +47,21 @@ export const resetUserPassword = createAsyncThunk(
   },
 );
 
+export const getUserData = createAsyncThunk(
+  "user/getUserData",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setLoading(true));
+      const response = await axiosInstance.get("/api/v1/me");
+      dispatch(setLoading(false));
+      return response.data;
+    } catch (err) {
+      dispatch(setLoading(false));
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
 export const updateUserData = createAsyncThunk(
   "user/updateUserData",
   async (userData, { dispatch, rejectWithValue }) => {
@@ -108,6 +123,14 @@ const userSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(resetUserPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.data;
+      })
+      .addCase(getUserData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
