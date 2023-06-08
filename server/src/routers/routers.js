@@ -1,6 +1,6 @@
 const express = require('express')
 const {register, listusuarios, listaitinerarios, login, actualizarcontrasena, enviaremail, actualizardatos, eliminarcuenta, usuarione, protect, verifyRole} = require('../controllers/usuarioscontroller')
-const {generateBusqueda, historial} = require('../controllers/openAI')
+const {generateBusqueda, historial, historialitinerario} = require('../controllers/openAI')
 
 const routeruser = express.Router()
 
@@ -9,6 +9,7 @@ routeruser.post('/login', login)
 routeruser.post('/send', enviaremail)
 
 routeruser.use(protect)
+routeruser.post('/path', historialitinerario)
 routeruser.get('/me', usuarione)
 routeruser.post('/record', historial)
 routeruser.delete('/', eliminarcuenta)
