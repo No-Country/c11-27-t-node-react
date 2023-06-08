@@ -1,8 +1,18 @@
 import React from "react";
 import Button from "../Ui/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getItinerary } from "../../redux/slices/historySlice";
 
 const HistoryCard = ({ destino, fechainicio, fechafinal, ID_itinerario }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleButtonClick = async () => {
+    await dispatch(getItinerary(ID_itinerario));
+    navigate(`/itinerary/history/${ID_itinerario}`);
+  };
+
   return (
     <div className="gap-1 rounded bg-neutral-200 p-2 shadow-lg">
       <div>
@@ -10,14 +20,13 @@ const HistoryCard = ({ destino, fechainicio, fechafinal, ID_itinerario }) => {
         <div className="text-sm font-normal text-neutral-600">{`${fechainicio} - ${fechafinal}`}</div>
       </div>
       <div className="flex items-center justify-end">
-        <Link to={`/itinerary/${ID_itinerario}`}>
-          <Button
-            label="Ver itinerario"
-            variant="text"
-            iconPosition="right"
-            iconName="arrowRight"
-          />
-        </Link>
+        <Button
+          label="Ver itinerario"
+          variant="text"
+          iconPosition="right"
+          iconName="arrowRight"
+          onClick={handleButtonClick}
+        />
       </div>
     </div>
   );

@@ -21,7 +21,11 @@ function App() {
         />
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/itinerary/:id" element={<Itinerary />} />
+          <Route path="/itinerary/new/:id" element={<Itinerary type="new" />} />
+          <Route
+            path="/itinerary/history/:id"
+            element={<Itinerary type="history" />}
+          />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
