@@ -23,7 +23,8 @@ export const generateItinerary = createAsyncThunk(
 const itinerarySlice = createSlice({
   name: "itinerary",
   initialState: {
-    itinerary: null,
+    id: null,
+    data: null,
     status: "idle",
     error: null,
   },
@@ -35,7 +36,8 @@ const itinerarySlice = createSlice({
       })
       .addCase(generateItinerary.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.itinerary = action.payload.data;
+        state.id = action.payload.ID;
+        state.data = action.payload.data.search;
       })
       .addCase(generateItinerary.rejected, (state, action) => {
         state.status = "failed";

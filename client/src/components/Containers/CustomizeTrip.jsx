@@ -34,9 +34,16 @@ const CustomizeTrip = ({ setItineraryState, tripData }) => {
       intereses: tags,
     };
 
-    dispatch(generateItinerary(itineraryData)).then(result => {
-      navigate(`/itinerary/${result.payload.id}`);
-    });
+    dispatch(generateItinerary(itineraryData))
+      .unwrap()
+      .then(result => {
+        navigate(`/itinerary/${result.ID}`);
+      })
+      .catch(error => {
+        if (error.message) {
+          alert("Hubo un error al generar el itinerario. Intenta nuevamente.");
+        }
+      });
   };
 
   if (isLoading) {

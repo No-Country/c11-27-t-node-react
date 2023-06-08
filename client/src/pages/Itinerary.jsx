@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Header from "../components/Ui/Header";
@@ -8,9 +8,8 @@ import DayCard from "../components/Ui/DayCard";
 const Itinerary = () => {
   const { id } = useParams();
 
-  const itineraryData = useSelector(
-    state => state.itinerary.itineraryData.data,
-  );
+  const itineraryDataString = useSelector(state => state.itinerary.data);
+  const itineraryData = JSON.parse(itineraryDataString);
 
   return (
     <div className="flex h-screen flex-col justify-between bg-neutral-50 text-neutral-900">
