@@ -160,18 +160,18 @@ const usuarione = async (req, res) => {
 }
 
 const actualizardatos = async (req, res) => {
-  const { name, password, newpassword } = req.body
+  const { name, password, newPassword } = req.body
 
   const useremail = await usuarios.findOne({ email: req.user.email })
 
   const userpasswordbcry = bcrypt.compareSync(password, useremail.password)
   if (!userpasswordbcry) {
-    return res.json({
+    return res.status(401).json({
       message: 'Contraseña incorrecta',
     })
   }
 
-  const passwordbcrypt = await bcrypt.hash(newpassword, 12)
+  const passwordbcrypt = await bcrypt.hash(newPassword, 12)
   await usuarios.findOneAndUpdate(
     { email: req.user.email },
     {
@@ -182,7 +182,7 @@ const actualizardatos = async (req, res) => {
   )
 
   res.status(200).json({
-    status: 'success',
+    status: 'Success',
     message: 'Datos actualizados con exito',
     data: {
       name,
