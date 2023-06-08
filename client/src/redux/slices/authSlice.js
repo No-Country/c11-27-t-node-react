@@ -26,21 +26,27 @@ export const loginUser = createAsyncThunk(
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: {
+    isAuthenticated: false,
+    token: null,
+    iduser: null,
+  },
   reducers: {
     logout: state => {
       state.isAuthenticated = false;
       state.token = null;
-      state.userId = null;
+      state.iduser = null;
       localStorage.removeItem("authToken");
+      localStorage.removeItem("iduser");
     },
   },
   extraReducers: builder => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;
-      state.userId = action.payload.iduser;
+      state.iduser = action.payload.iduser;
       localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("iduser", action.payload.iduser);
     });
   },
 });
