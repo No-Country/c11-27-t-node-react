@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/reset-password/:accessToken/:userId"
+          element={<ResetPassword />}
+        />
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
           <Route path="/history" element={<History />} />
