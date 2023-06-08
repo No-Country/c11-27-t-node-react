@@ -64,7 +64,7 @@ const PlanTrip = ({ setItineraryState, setTripData }) => {
         <img
           src={Itinerary}
           alt="Plan Trip Image"
-          className="h-24 lg:block lg:h-96"
+          className="hidden h-24 lg:block lg:h-96"
         />
       </div>
     </div>
