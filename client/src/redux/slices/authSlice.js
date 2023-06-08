@@ -31,6 +31,7 @@ export const authSlice = createSlice({
     logout: state => {
       state.isAuthenticated = false;
       state.token = null;
+      state.userId = null;
       localStorage.removeItem("authToken");
     },
   },
@@ -38,6 +39,7 @@ export const authSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;
+      state.userId = action.payload.iduser;
       localStorage.setItem("authToken", action.payload.token);
     });
   },
