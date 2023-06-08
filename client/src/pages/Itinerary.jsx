@@ -5,11 +5,23 @@ import Header from "../components/Ui/Header";
 import Footer from "../components/Ui/Footer";
 import DayCard from "../components/Ui/DayCard";
 
-const Itinerary = () => {
+const Itinerary = ({ type }) => {
   const { id } = useParams();
 
-  const itineraryDataString = useSelector(state => state.itinerary.data);
-  const itineraryData = JSON.parse(itineraryDataString);
+  let itineraryData;
+  if (type === "new") {
+    const itineraryDataString = useSelector(state => state.itinerary.data);
+    itineraryData = JSON.parse(itineraryDataString);
+    console.log(itineraryData);
+  } else if (type === "history") {
+    const historyData = useSelector(state => state.history);
+    const foundHistory = historyData.history.find(
+      item => item.ID_itinerario === id,
+    );
+    if (foundHistory) {
+      itineraryData = JSON.parse(historyData.itinerary.search);
+    }
+  }
 
   return (
     <div className="flex h-screen flex-col justify-between bg-neutral-50 text-neutral-900">

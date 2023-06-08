@@ -39,7 +39,7 @@ const CustomizeTrip = ({ setItineraryState, tripData }) => {
     dispatch(generateItinerary(itineraryData))
       .unwrap()
       .then(result => {
-        navigate(`/itinerary/${result.ID}`);
+        navigate(`/itinerary/new/${result.ID}`);
       })
       .catch(error => {
         if (error.message) {
