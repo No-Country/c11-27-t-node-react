@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Header from "../components/Ui/Header";
 import Footer from "../components/Ui/Footer";
 import Login from "../components/Containers/Auth/Login";
@@ -8,6 +10,14 @@ import CheckEmail from "../components/Containers/Auth/CheckEmail";
 
 const Auth = () => {
   const [authState, setAuthState] = useState("login");
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated, navigate]);
 
   let authComponent;
   switch (authState) {
