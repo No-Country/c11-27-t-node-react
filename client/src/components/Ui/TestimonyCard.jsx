@@ -1,24 +1,20 @@
 import React from "react";
-import AlexImage from "../../assets/user1.jpg";
-import EmmaImage from "../../assets/user2.jpg";
-import SofiaImage from "../../assets/user3.jpg";
-import RichardImage from "../../assets/user4.jpg";
 
 const images = {
   Alex: {
-    src: AlexImage,
+    src: "https://images.pexels.com/photos/5384445/pexels-photo-5384445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     alt: "Foto de perfil de Alex",
   },
   Emma: {
-    src: EmmaImage,
+    src: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     alt: "Foto de perfil de Emma",
   },
   Sofia: {
-    src: SofiaImage,
+    src: "https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     alt: "Foto de perfil de Sofia",
   },
   Richard: {
-    src: RichardImage,
+    src: "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     alt: "Foto de perfil de Richard",
   },
 };
