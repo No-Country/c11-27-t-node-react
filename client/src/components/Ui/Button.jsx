@@ -83,6 +83,12 @@ const Button = ({
       textStyle =
         "text-blue-500 hover:text-blue-600 focus:text-blue-700 disabled:text-gray-400";
       break;
+    case "white":
+      buttonColor =
+        "bg-white text-neutral-900 hover:bg-gray-200 focus:bg-gray-300 disabled:bg-gray-200 disabled:text-gray-400";
+      textStyle =
+        "text-neutral-900 hover:text-gray-800 focus:text-gray-800 disabled:text-gray-400";
+      break;
     default:
       buttonColor =
         "bg-green-400 text-white hover:bg-green-500 focus:bg-green-600 disabled:bg-gray-200 disabled:text-gray-400";
@@ -92,13 +98,14 @@ const Button = ({
 
   const disabledStyle = "cursor-not-allowed";
   const iconOnlyStyle = "p-1";
+  const noPaddingStyle = variant === "text" ? "" : "px-4 py-2";
 
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyle} ${iconOnly ? iconOnlyStyle : "px-4 py-2"} ${
+      className={`${baseStyle} ${iconOnly ? iconOnlyStyle : noPaddingStyle} ${
         variant === "text" ? textStyle : buttonColor
       } ${disabled ? disabledStyle : ""} ${fullWidth ? "w-full" : ""}`}
     >
