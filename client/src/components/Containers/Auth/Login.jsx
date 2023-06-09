@@ -61,7 +61,7 @@ const Login = ({ setAuthState }) => {
             </div>
           </div>
           <Button label="Iniciar sesión" fullWidth onClick={handleLogin} />
-          <div className="flex items-center justify-center text-sm font-semibold">
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold">
             <div>¿No tienes una cuenta?</div>
             <Button
               label="Regístrate ahora"

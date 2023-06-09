@@ -46,7 +46,7 @@ const DayCard = ({ day }) => {
               </div>
             </div>
             {isExpanded && (
-              <div className="mt-2">
+              <div className="ml-5 mt-2">
                 <Button
                   label="Ver en Google Maps"
                   variant="text"
