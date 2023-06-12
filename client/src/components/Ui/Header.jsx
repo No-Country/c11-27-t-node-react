@@ -19,7 +19,7 @@ const Header = ({ pageType }) => {
 
   if (pageType === "auth") {
     return (
-      <header className="sticky top-0 z-50 flex items-center justify-start bg-neutral-50 p-4">
+      <header className="sticky top-0 z-50 flex items-center justify-start bg-neutral-50 p-4 lg:px-8">
         <Link to="/" className="flex items-center gap-2">
           <img
             src={Logo}
@@ -32,7 +32,7 @@ const Header = ({ pageType }) => {
     );
   } else if (pageType === "loggedin") {
     return (
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral-50 p-4">
+      <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral-50 p-4 lg:px-8">
         <div>
           <Link to="/" className="flex items-center gap-2">
             <img
@@ -75,7 +75,7 @@ const Header = ({ pageType }) => {
     );
   } else {
     return (
-      <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral-50 p-4">
+      <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral-50 p-4 lg:px-8">
         <div>
           <Link to="/" className="flex items-center gap-2">
             <img
